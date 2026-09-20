@@ -4,10 +4,15 @@
 package com.lectures.business.objects;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import com.lectures.business.objects.domain.Address;
+import com.lectures.business.objects.domain.AnemicOrder;
+import com.lectures.business.objects.domain.AnemicOrderLine;
 import com.lectures.business.objects.domain.CustomerBean;
 import com.lectures.business.objects.domain.Money;
+import com.lectures.business.objects.domain.Order;
+import com.lectures.business.objects.domain.OrderCalculator;
 
 /**
  *
@@ -68,5 +73,30 @@ public class BusinessObjects {
         // // should throw an exception due to currency mismatch
         // var money4 = Money.tl("50").plus(new Money(new BigDecimal("15"), Currency.getInstance("USD")));
         // System.out.println(money4);
+
+        /* Case 04: Rich Entity (AnemicOrder vs Rich Order)
+        
+        Look at the difference between anemic and rich orders total amount of lines calculation
+         */
+        Order ord = new Order(10248, "VINET", LocalDate.of(1996, 7, 4));
+        AnemicOrder anemicOrd = new AnemicOrder();
+
+        for (int i = 0; i < PRODUCTS.length; i++) {
+            ord.addLine(PRODUCTS[i], Money.tl(PRICES[i]), QUANTITIES[i], new BigDecimal(DISCOUNTS[i]));
+
+            AnemicOrderLine line = new AnemicOrderLine();
+            line.setProductId(PRODUCTS[i]);
+            line.setUnitPrice(Double.parseDouble(PRICES[i]));
+            line.setQuantity(QUANTITIES[i]);
+            line.setDiscount(Double.parseDouble(DISCOUNTS[i]));
+            anemicOrd.getLines().add(line);
+        }
+
+        System.out.println("anemic total : " + new OrderCalculator().total(anemicOrd));
+        System.out.println("rich   total : " + ord.total());
     }
+    private static final int[] PRODUCTS = {11, 42, 72, 28, 39};
+    private static final String[] PRICES = {"14.00", "9.80", "34.80", "45.60", "18.00"};
+    private static final int[] QUANTITIES = {12, 10, 5, 9, 21};
+    private static final String[] DISCOUNTS = {"0.05", "0.15", "0.10", "0.25", "0.05"};
 }
