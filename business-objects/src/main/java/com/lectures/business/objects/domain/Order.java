@@ -10,14 +10,14 @@ import java.util.Optional;
 /**
  * Order aggregate. Every state change goes through a method that checks the
  * rule first. There is no setter to bypass.
- * 
- * Constraints:
- * - There are no setters to bypass the rules. 
- * - State changes can only occur through the provided methods(addLine,confirm,ship,cancel)
- * - lines function can't return a modifiable list; it provides a defensive copy. (List.copyOf is used)
- * - shippedDate function returns an Optional to indicate that the order may not have been shipped yet.
- * - There are no jakarta, java.sql or System.out dependencies; the aggregate is self-contained.
- * - The total method returns zero if there are no order lines.
+ *
+ * Constraints: - There are no setters to bypass the rules. - State changes can
+ * only occur through the provided methods(addLine,confirm,ship,cancel) - lines
+ * function can't return a modifiable list; it provides a defensive copy.
+ * (List.copyOf is used) - shippedDate function returns an Optional to indicate
+ * that the order may not have been shipped yet. - There are no jakarta,
+ * java.sql or System.out dependencies; the aggregate is self-contained. - The
+ * total method returns zero if there are no order lines.
  */
 public final class Order {
 
@@ -140,5 +140,22 @@ public final class Order {
             throw new IllegalStateException(
                     "cannot " + action + " an order in status " + status);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Order order = (Order) other;
+        return orderId == order.orderId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(orderId);
     }
 }
