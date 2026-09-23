@@ -1,7 +1,12 @@
-package com.lectures.business.objects.domain.anemic;
-
 /**
- * This package contains classes that demonstrate the anemic domain model anti-pattern.
- * It is intended for educational purposes to show the drawbacks of separating business logic
- * from the data model.
+ * Deliberately bad examples, kept for comparison only.
+ *
+ * <p>
+ * Nothing in this package is a model to follow: fields are public through
+ * setters, money is a {@code double}, and the rules live in a separate
+ * calculator instead of on the objects themselves.
+ *
+ * <p>
+ * Never import from here outside a teaching exercise.
  */
+package com.lectures.business.objects.domain.anemic;
