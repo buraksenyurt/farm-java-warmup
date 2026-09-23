@@ -10,21 +10,13 @@ import java.util.Objects;
     Constraints:
     - class is final, fields are final, there are no setters
     - Getter names not prefixed with "get" (e.g., street() instead of getStreet())
-    - Changes with methods (e.g., withCountry) return new Address instances rather than modifying the existing one.
-    - 
-*/
+ */
 public final class Address {
+
     private final String street;
     private final String city;
-    private final String postalCode;
+    private final String postalCode; // can be Value Object
     private final String country;
-
-    private static String requireText(String value, String field) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException(field + " must not be blank");
-        }
-        return value.strip();
-    }
 
     public Address(String street, String city, String postalCode, String country) {
         this.street = requireText(street, "street");
@@ -33,7 +25,14 @@ public final class Address {
         this.country = requireText(country, "country");
     }
 
-     public String street() {
+    private static String requireText(String value, String field) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(field + " must not be blank");
+        }
+        return value.strip();
+    }
+
+    public String street() {
         return street;
     }
 
@@ -49,8 +48,12 @@ public final class Address {
         return country;
     }
 
-    public Address withCountry(String newCountry) {
-        return new Address(street, city, postalCode, newCountry);
+    public String singleLine() {
+        return street + ", " + postalCode + " " + city + ", " + country;
+    }
+
+    public boolean isIn(String countryName) {
+        return country.equalsIgnoreCase(countryName);
     }
 
     @Override
@@ -58,14 +61,13 @@ public final class Address {
         if (this == other) {
             return true;
         }
-        // Pattern matching for instanceof (Java 16+)
         if (!(other instanceof Address address)) {
             return false;
         }
         return street.equals(address.street)
-            && city.equals(address.city)
-            && postalCode.equals(address.postalCode)
-            && country.equals(address.country);
+                && city.equals(address.city)
+                && postalCode.equals(address.postalCode)
+                && country.equals(address.country);
     }
 
     @Override

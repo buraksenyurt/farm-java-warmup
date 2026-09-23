@@ -7,16 +7,16 @@ import java.util.Objects;
 
 /**
  * Monetary amount with a currency. Immutable, scale-normalised.
- * 
- * Constraints:
- * - There are no double or float fields; use BigDecimal instead.
- * - Arithmetic methods return new Money instances; the class is immutable.
- * - Different currencies cannot be mixed in arithmetic operations.
- * - With setScale, the amount is normalized according to the currency's default fraction digits.
+ *
+ * Constraints: - There are no double or float fields; use BigDecimal instead. -
+ * Arithmetic methods return new Money instances; the class is immutable. -
+ * Different currencies cannot be mixed in arithmetic operations. - With
+ * setScale, the amount is normalized according to the currency's default
+ * fraction digits.
  */
 public record Money(BigDecimal amount, Currency currency) implements Comparable<Money> {
 
-    private static final Currency TRY = Currency.getInstance("TRY");
+    private static final Currency TL = Currency.getInstance("TRY");
 
     public Money {
         Objects.requireNonNull(amount, "amount must not be null");
@@ -25,7 +25,7 @@ public record Money(BigDecimal amount, Currency currency) implements Comparable<
     }
 
     public static Money tl(String amount) {
-        return new Money(new BigDecimal(amount), TRY);
+        return new Money(new BigDecimal(amount), TL);
     }
 
     public static Money zero(Currency currency) {

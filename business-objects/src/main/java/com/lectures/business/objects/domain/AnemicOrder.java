@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lectures.business.objects.domain.anemic.AnemicOrderLine;
+
 public class AnemicOrder {
 
     private int orderId;

@@ -1,4 +1,6 @@
-package com.lectures.business.objects.domain;
+package com.lectures.business.objects.domain.anemic;
+
+import com.lectures.business.objects.domain.AnemicOrder;
 
 public final class OrderCalculator {
 

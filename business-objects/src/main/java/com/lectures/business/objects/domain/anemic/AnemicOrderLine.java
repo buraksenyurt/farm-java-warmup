@@ -1,4 +1,4 @@
-package com.lectures.business.objects.domain;
+package com.lectures.business.objects.domain.anemic;
 
 public class AnemicOrderLine {
 

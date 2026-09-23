@@ -7,15 +7,10 @@ The compiler generates the constructor, accessors, `equals()`, `hashCode()`, and
 To look at the class content
 javap -p target/classes/com/lectures/business/objects/domain/PostalAddress.class
  */
-public record PostalAddress(
-        String street,
-        String city,
-        String postalCode,
-        String country
-        ) {
+public record PostalAddress(String street, String city, String postalCode, String country) {
 
-    /*
-    Compact constructor. It runs before the fields are assigned.
+    /**
+     * Compact constructor: runs before the fields are assigned.
      */
     public PostalAddress {
         street = requireText(street, "street");
@@ -31,7 +26,7 @@ public record PostalAddress(
         return value.strip();
     }
 
-    public PostalAddress withCountry(String newCountry) {
-        return new PostalAddress(street, city, postalCode, newCountry);
+    public String singleLine() {
+        return street + ", " + postalCode + " " + city + ", " + country;
     }
 }
