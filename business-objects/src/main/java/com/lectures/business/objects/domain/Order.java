@@ -11,14 +11,15 @@ import java.util.Optional;
  * Order aggregate. Every state change goes through a method that checks the
  * rule first. There is no setter to bypass.
  *
- * Constraints: 
- * - There are no setters to bypass the rules. 
- * - State changes can only occur through the provided methods(addLine,removeLine,confirm,shipTo,ship,cancel) 
- * - shipToAddress changes the shipping address as a whole; there is no partial update of the address.
- * - lines function can't return a modifiable list; it provides a defensive copy.(List.copyOf is used) 
- * - shippedDate function returns an Optional to indicate that the order may not have been shipped yet. 
- * - There are no jakarta, java.sql or System.out dependencies; the aggregate is self-contained. 
- * - The total method returns zero if there are no order lines.
+ * Constraints: - There are no setters to bypass the rules. - State changes can
+ * only occur through the provided
+ * methods(addLine,removeLine,confirm,shipTo,ship,cancel) - shipToAddress
+ * changes the shipping address as a whole; there is no partial update of the
+ * address. - lines function can't return a modifiable list; it provides a
+ * defensive copy.(List.copyOf is used) - shippedDate function returns an
+ * Optional to indicate that the order may not have been shipped yet. - There
+ * are no jakarta, java.sql or System.out dependencies; the aggregate is
+ * self-contained. - The total method returns zero if there are no order lines.
  */
 public final class Order {
 
@@ -45,7 +46,7 @@ public final class Order {
         this.orderDate = Objects.requireNonNull(orderDate, "orderDate must not be null");
     }
 
-    // --- behaviour -------------------------------------------------------
+    // --- behaviour begin ---
     /**
      * Adds a product, or increases the quantity when it is already on the
      * order.
@@ -110,6 +111,7 @@ public final class Order {
         status = OrderStatus.CANCELLED;
     }
 
+    // --- behaviour end ---    
     public Money total() {
         return lines.stream()
                 .map(OrderLine::lineTotal)
@@ -117,7 +119,7 @@ public final class Order {
                 .orElse(Money.tl("0"));
     }
 
-    // --- state -----------------------------------------------------------
+    // --- state begin ---
     public int orderId() {
         return orderId;
     }
@@ -148,8 +150,9 @@ public final class Order {
     public List<OrderLine> lines() {
         return List.copyOf(lines);
     }
+    // --- state end ---
 
-    // --- helpers ---------------------------------------------------------
+    // --- helpers begin ---
     private int indexOfProduct(int productId) {
         for (int i = 0; i < lines.size(); i++) {
             if (lines.get(i).productId() == productId) {
@@ -182,4 +185,5 @@ public final class Order {
     public int hashCode() {
         return Integer.hashCode(orderId);
     }
+    // --- helpers end ---
 }
