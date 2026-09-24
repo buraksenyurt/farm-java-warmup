@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import com.lectures.business.objects.domain.Address;
 import com.lectures.business.objects.domain.AnemicOrder;
+import com.lectures.business.objects.domain.Customer;
 import com.lectures.business.objects.domain.Money;
 import com.lectures.business.objects.domain.Order;
 import com.lectures.business.objects.domain.anemic.AnemicOrderLine;
@@ -97,6 +98,21 @@ public class BusinessObjects {
 
         System.out.println("anemic total : " + new OrderCalculator().total(anemic));
         System.out.println("rich   total : " + rich.total());
+
+        // Case 05: Using Customer aggregate demonstration
+        Address address = new Address("123 Main St", "Istanbul", "34999", "TR");
+        Customer customer = new Customer("ALFKI", "Alfreds Futterkiste", address);
+        System.out.println("Customer created: " + customer);
+
+        customer.relocateTo(new Address("456 Elm St", "Ankara", "67890", "TR"));
+        System.out.println("Customer after relocation: " + customer);
+
+        customer.assignContactName("John Doe");
+        System.out.println("Customer after assigning contact name: " + customer);
+
+        customer.clearContact();
+        System.out.println("Customer after clearing contact name: " + customer);
+
     }
     private static final int[] PRODUCTS = {11, 42, 72, 28, 39};
     private static final String[] PRICES = {"14.00", "9.80", "34.80", "45.60", "18.00"};
