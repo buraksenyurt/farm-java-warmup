@@ -6,7 +6,7 @@ package com.lectures.business.objects.domain.anemic;
  * getters/setters without any business logic. Stayed for educational purposes
  * only.
  */
-public class ProductBean {
+public class Product {
 
     private int productId;              // schema: smallint NOT NULL
     private String productName;         // schema: varchar(40) NOT NULL
@@ -16,7 +16,7 @@ public class ProductBean {
     private short unitsInStock;         // schema: smallint
     private boolean discontinued;       // schema: integer NOT NULL (0/1)
 
-    public ProductBean() {
+    public Product() {
         // JavaBean contract: public no-arg constructor
     }
 

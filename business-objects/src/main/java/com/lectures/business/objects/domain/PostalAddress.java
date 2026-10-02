@@ -25,8 +25,4 @@ public record PostalAddress(String street, String city, String postalCode, Strin
         }
         return value.strip();
     }
-
-    public String singleLine() {
-        return street + ", " + postalCode + " " + city + ", " + country;
-    }
 }
